@@ -85,7 +85,12 @@
         FRPChangeRootViewControllerSegueTransitionViewController *transitionViewController = [[FRPChangeRootViewControllerSegueTransitionViewController alloc] init];
         transitionViewController.sourceView = ((UIViewController *)self.sourceViewController).view;
         transitionViewController.destinationView = destinationViewController.view;
-        [destinationViewController presentViewController:transitionViewController animated:NO completion:nil];
+        [destinationViewController presentViewController:transitionViewController animated:NO completion:^{
+            if ([self.sourceViewController presentingViewController]) {
+                [[self.sourceViewController presentingViewController] dismissViewControllerAnimated:NO
+                                                                                         completion:NULL];
+            }
+        }];
     }
 }
 
